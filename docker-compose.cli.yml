@@ -1,0 +1,21 @@
+services:
+  yarn:
+    user: root
+    build:
+      context: .
+      dockerfile: ./docker/nodejs/Dockerfile
+    image: lucasfonte/api-challenge-ligue-lead:latest
+    volumes:
+      - ./app:/application
+    working_dir: /application
+    environment:
+      TZ: "America/Fortaleza"
+    env_file:
+      - .env
+    networks:
+      - net_challenge_ligue_lead
+    entrypoint: ["yarn"]
+
+networks:
+  net_challenge_ligue_lead:
+    external: true
