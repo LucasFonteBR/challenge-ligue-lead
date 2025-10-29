@@ -1,0 +1,51 @@
+services:
+  redis:
+    container_name: challenge-ligue-lead-redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - net_challenge_ligue_lead
+
+  mysql:
+    container_name: api-challenge-ligue-lead-mysql
+    image: mysql:8.0.25
+    ports:
+      - "3306:3306"
+    volumes:
+      - challenge_ligue_lead_mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: api_challenge
+    networks:
+      - net_challenge_ligue_lead
+
+  api-challenge-ligue-lead:
+    container_name: api-challenge-ligue-lead
+    build:
+      context: .
+      dockerfile: ./docker/nodejs/Dockerfile
+    ports:
+      - "3005:3005"
+      - "9229:9229"
+    depends_on:
+      - redis
+      - mysql
+    volumes:
+      - ./app:/application
+    environment:
+      TZ: "America/Fortaleza"
+    env_file:
+      - .env
+    networks:
+      - net_challenge_ligue_lead
+    command: ["yarn", "debug"]
+
+
+networks:
+  net_challenge_ligue_lead:
+    external: true
+
+volumes:
+  challenge_ligue_lead_mysql_data:
+    name: challenge_ligue_lead_mysql_data

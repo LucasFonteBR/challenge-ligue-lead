@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  api-challenge-ligue-lead:
+    build:
+      context: .
+      dockerfile: ./docker/nodejs/Dockerfile
+    image: bhut/api-skeleton-node-mysql:latest
