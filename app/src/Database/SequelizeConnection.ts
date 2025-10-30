@@ -51,4 +51,3 @@ export const sequelizeTestConnection = async (): Promise<void> => {
     process.exit(1);
   }
 };
- 
