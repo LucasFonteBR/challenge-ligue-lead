@@ -2,17 +2,17 @@ import { Request, Response, NextFunction } from 'express';
 import { IApiTransformer } from '../../Api/Transformers/IApiTransformer';
 import { ProjectDto } from '../Dtos/ProjectDto';
 import { ProjectResponse } from '../Responses/ProjectResponse';
-import { GetProjectByUuidService } from '../Services/GetProjectByUuidService';
+import { UpdateProjectByUuidService } from '../Services/UpdateProjectByUuidService';
 
-export class GetProjectByUuidController {
+export class UpdateProjectByUuidController {
   constructor(
     private readonly transformer: IApiTransformer<ProjectDto, ProjectResponse>,
-    private readonly service: GetProjectByUuidService,
+    private readonly service: UpdateProjectByUuidService,
   ) {}
 
   public async handle(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      let dto = <ProjectDto>await this.transformer.fromApi(req.params);
+      let dto = <ProjectDto>await this.transformer.fromApi({ ...req.params, ...req.body });
 
       dto = await this.service.invoke(dto);
 
