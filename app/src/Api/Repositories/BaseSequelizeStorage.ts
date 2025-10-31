@@ -14,11 +14,19 @@ export abstract class BaseSequelizeStorage<TModel extends Model, TEntity> implem
   }
 
   async update(entity: TEntity): Promise<TEntity> {
-    const [_, [updated]] = await this.model.update(entity, {
+    const [affectedCount] = await this.model.update(entity, {
       where: { uuid: (entity as any).uuid },
-      returning: true,
     });
-    return updated.toJSON() as TEntity;
+
+    if (affectedCount === 0) {
+      throw new Error(`No record found to update with UUID ${(entity as any).uuid}`);
+    }
+
+    const updated = await this.model.findOne({
+      where: { uuid: (entity as any).uuid },
+    });
+
+    return updated?.toJSON() as TEntity;
   }
 
   async delete(uuid: string): Promise<void> {
