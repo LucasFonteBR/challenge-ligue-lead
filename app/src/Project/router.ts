@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { createProjectController, getProjectByUuidController } from '.';
+import { createProjectController, deleteProjectByUuidController, getProjectByUuidController } from '.';
 
 const projectRouter = express.Router();
 
@@ -9,6 +9,10 @@ projectRouter.post('/v1/project', (req: Request, res: Response, next: NextFuncti
 
 projectRouter.get('/v1/project/:uuid', (req: Request, res: Response, next: NextFunction) => {
   return getProjectByUuidController.handle(req, res, next);
+});
+
+projectRouter.delete('/v1/project/:uuid', (req: Request, res: Response, next: NextFunction) => {
+  return deleteProjectByUuidController.handle(req, res, next);
 });
 
 export { projectRouter };
