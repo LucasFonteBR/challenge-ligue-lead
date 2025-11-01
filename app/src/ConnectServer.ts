@@ -7,6 +7,7 @@ import { RouteNotFoundException } from './Api/Exceptions/RouteNotFoundException'
 import { errorMiddleware } from './Api/Middlewares/ErrorMiddleware';
 import { projectRouter } from './Project/router';
 import { RequestIdMiddleware } from './Api/Middlewares/RequestIdMiddleware';
+import { taskRouter } from './Task/router';
 
 const GRACEFUL_SHUTDOWN_TIME = 63 * 1000; /*Wait 63s*/
 let HEALTH_CHECK_ENABLE = true;
@@ -47,6 +48,7 @@ export class ConnectServer {
       return HEALTH_CHECK_ENABLE ? res.status(200).send('OK') : res.status(503).send('Service Unavailable');
     });
     this.application.app.use('/api/challenge/ligue-lead', [RequestIdMiddleware], projectRouter);
+    this.application.app.use('/api/challenge/ligue-lead', [RequestIdMiddleware], taskRouter);
     this.application.app.use((req: Request, res: Response, next: NextFunction) => {
       next(new RouteNotFoundException());
     });

@@ -1,0 +1,7 @@
+export enum TaskStatusEnum {
+  CREATED = 'CREATED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  CODE_REVIEW = 'CODE_REVIEW',
+  QA = 'QA',
+  CONCLUDED = 'CONCLUDED',
+}
