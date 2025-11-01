@@ -8,4 +8,6 @@ export interface IStorage<T> {
   findByUuid(uuid: string): Promise<T>;
 
   findAll(page?: number, pageSize?: number): Promise<T[]>;
+
+  count(): Promise<number>;
 }

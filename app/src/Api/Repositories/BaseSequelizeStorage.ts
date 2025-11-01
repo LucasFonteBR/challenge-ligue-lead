@@ -47,4 +47,8 @@ export abstract class BaseSequelizeStorage<TModel extends Model, TEntity> implem
     });
     return results.map((r: TModel) => r.toJSON() as TEntity);
   }
+
+  async count(): Promise<number> {
+    return await this.model.count();
+  }
 }
