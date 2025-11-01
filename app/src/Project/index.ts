@@ -1,15 +1,18 @@
 import { CreateProjectController } from './Controllers/CreateProjectController';
 import { DeleteProjectByUuidController } from './Controllers/DeleteProjectByUuidController';
 import { GetProjectByUuidController } from './Controllers/GetProjectByUuidController';
+import { ListProjectController } from './Controllers/ListProjectController';
 import { UpdateProjectByUuidController } from './Controllers/UpdateProjectByUuidController';
 import { ProjectStorage } from './Repositories/ProjectStorage';
 import { CreateProjectService } from './Services/CreateProjectService';
 import { DeleteProjectByUuidService } from './Services/DeleteProjectByUuidService';
 import { GetProjectByUuidService } from './Services/GetProjectByUuidService';
+import { ListProjectService } from './Services/ListProjectService';
 import { UpdateProjectByUuidService } from './Services/UpdateProjectByUuidService';
 import { CreateProjectTransformer } from './Transformers/CreateProjectTransformer';
 import { DeleteProjectByUuidTransformer } from './Transformers/DeleteProjectByUuidTransformer';
 import { GetProjectByUuidTransformer } from './Transformers/GetProjectByUuidTransformer';
+import { ListProjectTransformer } from './Transformers/ListProjectTransformer';
 import { UpdateProjectByUuidTransformer } from './Transformers/UpdateProjectByUuidTransformer';
 
 const storage = new ProjectStorage();
@@ -33,3 +36,8 @@ export const deleteProjectByUuidController = new DeleteProjectByUuidController(d
 const updateProjectByUuidTransformer = new UpdateProjectByUuidTransformer();
 const updateProjectByUuidService = new UpdateProjectByUuidService(updateProjectByUuidTransformer, storage);
 export const updateProjectByUuidController = new UpdateProjectByUuidController(updateProjectByUuidTransformer, updateProjectByUuidService);
+
+// LIST PROJECT INSTANCES
+const listProjectTransformer = new ListProjectTransformer();
+const listProjectService = new ListProjectService(listProjectTransformer, storage);
+export const listProjectController = new ListProjectController(listProjectTransformer, listProjectService);
